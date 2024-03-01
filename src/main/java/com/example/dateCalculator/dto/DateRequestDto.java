@@ -1,6 +1,4 @@
-package com.example.datecalculator.dto;
-
-import java.time.LocalDate;
+package com.example.dateCalculator.dto;
 
 public class DateRequestDto {
 

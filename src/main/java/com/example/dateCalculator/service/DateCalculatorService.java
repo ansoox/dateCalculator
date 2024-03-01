@@ -1,6 +1,6 @@
-package com.example.datecalculator.service;
+package com.example.dateCalculator.service;
 
-import com.example.datecalculator.dto.DateRequestDto;
+import com.example.dateCalculator.dto.DateRequestDto;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;

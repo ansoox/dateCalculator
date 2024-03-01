@@ -1,4 +1,4 @@
-package com.example.datecalculator.dto;
+package com.example.dateCalculator.dto;
 
 public class DateResponseDto {
 
