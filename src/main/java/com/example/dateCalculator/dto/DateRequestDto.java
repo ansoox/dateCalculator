@@ -1,4 +1,4 @@
-package com.example.dateCalculator.dto;
+package com.example.datecalculator.dto;
 
 import java.time.LocalDate;
 

@@ -1,8 +1,8 @@
-package com.example.dateCalculator.controller;
+package com.example.datecalculator.controller;
 
-import com.example.dateCalculator.dto.DateRequestDto;
-import com.example.dateCalculator.dto.DateResponseDto;
-import com.example.dateCalculator.service.DateCalculatorService;
+import com.example.datecalculator.dto.DateRequestDto;
+import com.example.datecalculator.dto.DateResponseDto;
+import com.example.datecalculator.service.DateCalculatorService;
 import org.json.JSONObject;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
