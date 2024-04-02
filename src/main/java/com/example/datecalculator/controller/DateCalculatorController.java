@@ -21,8 +21,8 @@ public class DateCalculatorController {
     }
 
     @GetMapping("/calculate") //endpoint
-    public ResponseEntity<DateResponseDto> getDateDiff (@RequestParam("date1") String date1, @RequestParam("date2") String date2){
-        long diffInDays = dateCalculatorService.calculatorDateDiff(new DateRequestDto(date1, date2));
+    public ResponseEntity<DateResponseDto> getDateDiff (@RequestParam("firstDate") String firstDate, @RequestParam("secondDate") String secondDate){
+        long diffInDays = dateCalculatorService.calculatorDateDiff(new DateRequestDto(firstDate, secondDate));
         JSONObject json = new JSONObject();
         json.put("diffInDays", diffInDays);
         return ResponseEntity.ok()
