@@ -2,12 +2,10 @@ package com.example.datecalculator.service;
 
 import com.example.datecalculator.model.Favourite;
 import org.springframework.stereotype.Service;
-
 import com.example.datecalculator.repository.FavouriteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.Timestamp;
-
 import java.util.List;
 
 @Service

@@ -1,7 +1,6 @@
 package com.example.datecalculator.model;
 
 import jakarta.persistence.*;
-
 import java.sql.Timestamp;
 
 @Entity

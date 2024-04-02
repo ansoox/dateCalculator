@@ -1,7 +1,6 @@
 package com.example.datecalculator.repository;
 
 import com.example.datecalculator.model.History;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -2,7 +2,6 @@ package com.example.datecalculator.service;
 
 import com.example.datecalculator.dto.DateRequestDto;
 import org.springframework.stereotype.Service;
-
 import java.time.Duration;
 import java.time.LocalDate;
 
