@@ -1,9 +1,11 @@
 package com.example.datecalculator.service;
+
 import com.example.datecalculator.model.Favourite;
 import org.springframework.stereotype.Service;
 
 import com.example.datecalculator.repository.FavouriteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import java.sql.Timestamp;
 
 import java.util.List;
@@ -13,7 +15,7 @@ public class FavouriteService {
     private final FavouriteRepository favouriteRepository;
 
     @Autowired
-    public FavouriteService(FavouriteRepository favouriteRepository){
+    public FavouriteService(FavouriteRepository favouriteRepository) {
         this.favouriteRepository = favouriteRepository;
     }
 

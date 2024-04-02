@@ -1,7 +1,6 @@
 package com.example.datecalculator.controller;
 
 import com.example.datecalculator.model.History;
-import com.example.datecalculator.model.User;
 import com.example.datecalculator.service.HistoryService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

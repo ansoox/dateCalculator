@@ -3,7 +3,6 @@ package com.example.datecalculator.model;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
-
 import java.util.List;
 
 @Entity
@@ -16,7 +15,7 @@ public class User {
     @Column(nullable = false, length = 100)
     private String name;
 
-    @Column (nullable = false)
+    @Column(nullable = false)
     private String password;
 
     @Column(name = "created_at", nullable = false)

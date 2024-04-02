@@ -1,11 +1,12 @@
 package com.example.datecalculator.service;
-import com.example.datecalculator.model.User;
+
 import org.springframework.stereotype.Service;
 
 import com.example.datecalculator.model.History;
 import com.example.datecalculator.repository.HistoryRepository;
 import com.example.datecalculator.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import java.sql.Timestamp;
 
 import java.util.List;
@@ -49,6 +50,7 @@ public class HistoryService {
         }
         return false;
     }
+
     public List<History> getAllHistories() {
         return historyRepository.findAll();
     }
