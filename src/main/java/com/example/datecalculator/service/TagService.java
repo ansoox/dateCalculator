@@ -24,6 +24,9 @@ public class TagService {
     }
 
     public Tag addTag(TagDto tagDto) {
+       // if (tagRepository.searchByName(tagDto.getTagName()) != null) {
+       //     return null;
+       // }
         Tag tag = new Tag();
         tag.setName(tagDto.getTagName()); //если имя есть уже , то нельзя
         tag.setCreatedAt(new Timestamp(System.currentTimeMillis()));
@@ -74,4 +77,5 @@ public class TagService {
     public List<Date> getDatesByTag(Long tagId) {
         return dateRepository.findByTagId(tagId);
     }
+
 }

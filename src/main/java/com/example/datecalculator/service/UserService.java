@@ -1,5 +1,6 @@
 package com.example.datecalculator.service;
 
+import com.example.datecalculator.cache.EntityCache;
 import com.example.datecalculator.dto.ResponseDto.DateListResponseDto;
 import com.example.datecalculator.dto.ResponseDto.TagListResponseDto;
 import com.example.datecalculator.dto.ResponseDto.UserResponseDto;
@@ -24,20 +25,38 @@ public class UserService {
     private final UserRepository userRepository;
     private final DateRepository dateRepository;
     private final HistoryRepository historyRepository;
+    private final EntityCache<Long, User> entityCache;
+    private final EntityCache<String, List<User>> usersCache;
 
     @Autowired
-    public UserService(UserRepository userRepository, DateRepository dateRepository, HistoryRepository historyRepository) {
+    public UserService(UserRepository userRepository, DateRepository dateRepository,
+                       HistoryRepository historyRepository, EntityCache<Long, User> entityCache,
+                       EntityCache<String, List<User>> usersCache) {
         this.userRepository = userRepository;
         this.dateRepository = dateRepository;
         this.historyRepository = historyRepository;
+        this.entityCache = entityCache;
+        this.usersCache = usersCache;
     }
 
     public User findById(Long id) {
-        return userRepository.findById(id).orElse(null);
+        User cachedUser = entityCache.get(id);
+        if (cachedUser != null) {
+            return cachedUser;
+        }
+        User user = userRepository.findById(id).orElse(null);
+        if (user != null) {
+            entityCache.put(id, user);
+        }
+        return user;
     }
 
     public List<User> getAllUsers() {
-        return userRepository.findAll();
+        List<User> allUsers = userRepository.findAll();
+        for(User user : allUsers){
+            entityCache.put(user.getId(), user);
+        }
+        return allUsers;
     }
 
     public List<UserResponseDto> findUsersByName(String name) {
@@ -49,6 +68,7 @@ public class UserService {
     }
 
     public User addUser(UserDto userDto) {
+        entityCache.clear();
         User user = new User();
         user.setName(userDto.getName());
         user.setPassword(userDto.getPassword());
@@ -58,6 +78,7 @@ public class UserService {
     }
 
     public User updateUser(Long id, String name, String password) {
+        entityCache.clear();
         User user = userRepository.findById(id).orElse(null);
         if (user != null) {
             user.setName(name);
@@ -69,6 +90,7 @@ public class UserService {
     }
 
     public boolean deleteUser(Long id) {
+        entityCache.clear();
         User user = userRepository.findById(id).orElse(null);
         if (user != null) {
             userRepository.delete(user);

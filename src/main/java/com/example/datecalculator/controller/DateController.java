@@ -55,7 +55,7 @@ public class DateController {
     public ResponseEntity<DateResponseDto> updateDate(@RequestBody DateDto dateDto, @PathVariable(name = "id") Long id) {
         Date updatedDate = dateService.updateDate(id, dateDto);
         DateResponseDto responseDate = new DateResponseDto(updatedDate);
-        return responseDate != null ? ResponseEntity.ok(responseDate) : ResponseEntity.notFound().build();
+        return ResponseEntity.ok(responseDate);
     }
 
     @PatchMapping("/{id}")
