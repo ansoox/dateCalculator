@@ -3,11 +3,12 @@ package com.example.datecalculator.model;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "favourite")
-public class Favourite {
+@Table(name = "DateEntity")
+public class Date {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,24 +22,25 @@ public class Favourite {
     @Column(name = "updated_at", nullable = false)
     private Timestamp updatedAt;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST,
+            CascadeType.MERGE})
     @JoinTable(
-            name = "users_to_favourites",
-            joinColumns = @JoinColumn(name = "favourite_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
+            name = "date_tags",
+            joinColumns = @JoinColumn(name = "date_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
-    private List<User> users;
+    private List<Tag> tags = new ArrayList<>();
 
-    public Long getId() {
-        return id;
+    public List<Tag> getTags(){
+        return this.tags;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Timestamp getDate() {
-        return date;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public void setDate(Timestamp date) {
@@ -59,5 +61,17 @@ public class Favourite {
 
     public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Timestamp getDate() {
+        return date;
+    }
+
+    public User getUser() {
+        return user;
     }
 }

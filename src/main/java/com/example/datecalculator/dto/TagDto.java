@@ -1,0 +1,25 @@
+package com.example.datecalculator.dto;
+
+import java.sql.Timestamp;
+
+public class TagDto {
+    private Long id;
+    private String tagName;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTagName() {
+        return tagName;
+    }
+
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
+    }
+
+}

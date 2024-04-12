@@ -6,17 +6,14 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
-@Table(name = "userTable")
-public class User {
+@Table(name = "Tag")
+public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 100)
-    private String name;
-
-    @Column(nullable = false)
-    private String password;
+    @Column(name = "tag_name", nullable = false, length = 100)
+    private String tagName;
 
     @Column(name = "created_at", nullable = false)
     private Timestamp createdAt;
@@ -24,14 +21,11 @@ public class User {
     @Column(name = "updated_at", nullable = false)
     private Timestamp updatedAt;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<History> historyList;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "tags")
     private List<Date> dates;
 
-    public List<Date> getDates(){
-        return dates;
+    public List<Date> getDates() {
+        return this.dates;
     }
 
     public void setCreatedAt(Timestamp createdAt) {
@@ -43,23 +37,15 @@ public class User {
     }
 
     public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPassword() {
-        return this.password;
+        this.tagName = name;
     }
 
     public Long getId() {
-        return this.id;
+        return id;
+    }
+
+    public String getTagName() {
+        return tagName;
     }
 
     public Timestamp getCreatedAt() {
@@ -68,9 +54,5 @@ public class User {
 
     public Timestamp getUpdatedAt() {
         return updatedAt;
-    }
-
-    public List<History> getHistoryList() {
-        return historyList;
     }
 }

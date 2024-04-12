@@ -50,6 +50,10 @@ public class History {
         this.updatedAt = updatedAt;
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public Timestamp getFirstDate() {
         return firstDate;
     }
@@ -60,5 +64,9 @@ public class History {
 
     public Timestamp getDiffInDays() {
         return diffInDays;
+    }
+
+    public User getUser() {
+        return user;
     }
 }

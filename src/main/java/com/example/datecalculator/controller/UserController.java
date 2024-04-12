@@ -1,15 +1,24 @@
 package com.example.datecalculator.controller;
 
+import com.example.datecalculator.dto.ResponseDto.DateListResponseDto;
+import com.example.datecalculator.dto.ResponseDto.TagListResponseDto;
+import com.example.datecalculator.dto.ResponseDto.UserListResponseDto;
+import com.example.datecalculator.dto.ResponseDto.UserResponseDto;
+import com.example.datecalculator.model.History;
 import com.example.datecalculator.model.User;
+import com.example.datecalculator.model.Date;
+import com.example.datecalculator.dto.UserDto;
 import com.example.datecalculator.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("/calculate/user")
 public class UserController {
     private final UserService userService;
 
@@ -17,39 +26,57 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/getUserByName/{name}")
-    public ResponseEntity<User> getUserByName(@PathVariable(name = "name") String name) {
-        User user = userService.findByName(name);
-        return user != null ? ResponseEntity.ok(user) : ResponseEntity.notFound().build();
+    @GetMapping
+    public List<UserListResponseDto> getALL() {
+        List<UserListResponseDto> response = new ArrayList<>();
+        for (User user : userService.getAllUsers()) {
+            response.add(new UserListResponseDto(user));
+        }
+        return response;
     }
 
-    @GetMapping("/getUserById/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable(name = "id") Long id) {
+    @GetMapping("/{id}")
+    public UserResponseDto getUserById(@PathVariable(name = "id") Long id) {
         User user = userService.findById(id);
-        return user != null ? ResponseEntity.ok(user) : ResponseEntity.notFound().build();
+        return new UserResponseDto(user);
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<UserResponseDto>> searchUsersByName(@RequestParam String name) {
+        List<UserResponseDto> users = userService.findUsersByName(name);
+        return ResponseEntity.ok(users);
+    }
 
-    @PostMapping("/addUser")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        User createdUser = userService.addUser(user);
+    @PostMapping
+    public ResponseEntity<User> createUser(@RequestBody UserDto userDto) {
+        User createdUser = userService.addUser(userDto);
         return ResponseEntity.ok(createdUser);
     }
 
-    @DeleteMapping("/deleteUser/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable(name = "id") Long id) {
         boolean isDeleted = userService.deleteUser(id);
-        return isDeleted ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
+        return isDeleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
 
-    @PutMapping("/updateUser/{id}")
-    public ResponseEntity<User> updateUser(@RequestBody User user, @PathVariable(name = "id") Long id) {
-        User updatedUser = userService.updateUser(id, user.getName(), user.getPassword());
+    @PutMapping("/{id}")
+    public ResponseEntity<User> updateUser(@RequestBody UserDto userDto, @PathVariable(name = "id") Long id) {
+        User updatedUser = userService.updateUser(id, userDto.getName(), userDto.getPassword());
         return updatedUser != null ? ResponseEntity.ok(updatedUser) : ResponseEntity.notFound().build();
     }
 
-    @GetMapping("/getAllUsers")
-    public List<User> getALL() {
-        return userService.getAllUsers();
+    @GetMapping("/getUserDates/{id}")
+    public List<DateListResponseDto> getUserDates(@PathVariable(name = "id") Long id) {
+        List<DateListResponseDto> response = new ArrayList<>();
+        for (Date date : userService.getDatesByUser(id)) {
+            response.add(new DateListResponseDto(date));
+        }
+        return response;
     }
+
+//    @GetMapping("/getUserHistories/{id}")
+//    public ResponseEntity<List<History>> getUserHistories(@PathVariable (name = "id") Long id) {
+//        List<History> histories = userService.getHistoriesByUser(id);
+//        return histories != null ? ResponseEntity.ok(histories) : ResponseEntity.notFound().build();
+//    }
 }

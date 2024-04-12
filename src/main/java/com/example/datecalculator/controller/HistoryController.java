@@ -1,6 +1,7 @@
 package com.example.datecalculator.controller;
 
 import com.example.datecalculator.model.History;
+import com.example.datecalculator.dto.HistoryDto;
 import com.example.datecalculator.service.HistoryService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,31 +18,25 @@ public class HistoryController {
         this.historyService = historyService;
     }
 
-    @GetMapping("/getHistoryByUserId/{userId}")
-    public ResponseEntity<List<History>> getHistoryByUserId(@PathVariable(name = "id") Long id) {
-        List<History> history = historyService.getHistoryByUserId(id);
-        return history != null ? ResponseEntity.ok(history) : ResponseEntity.notFound().build();
-    }
-
     @PostMapping("/postHistory")
-    public ResponseEntity<History> addHistory(@RequestBody History history) {
-        History createdHistory = historyService.addHistory(history);
+    public ResponseEntity<History> addHistory(@RequestBody HistoryDto historyDto) {
+        History createdHistory = historyService.addHistory(historyDto);
         return ResponseEntity.ok(createdHistory);
     }
 
     @DeleteMapping("/deleteHistory/{id}")
-    public ResponseEntity<Void> deleteAbility(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<Void> deleteHistory(@PathVariable(name = "id") Long id) {
         boolean isDeleted = historyService.deleteHistory(id);
         return isDeleted ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }
 
     @PutMapping("/updateHistory/{id}")
-    public ResponseEntity<History> updateAbility(@RequestBody History history, @PathVariable(name = "id") Long id) {
-        History updatedHistory = historyService.updateHistory(id, history);
+    public ResponseEntity<History> updateHistory(@RequestBody HistoryDto historyDto, @PathVariable(name = "id") Long id) {
+        History updatedHistory = historyService.updateHistory(id, historyDto);
         return updatedHistory != null ? ResponseEntity.ok(updatedHistory) : ResponseEntity.notFound().build();
     }
 
-    @GetMapping("/getHistoryById/{id}")
+    @GetMapping("/getHistory/{id}")
     public ResponseEntity<History> getHistoryById(@PathVariable(name = "id") Long id) {
         History history = historyService.findById(id);
         return history != null ? ResponseEntity.ok(history) : ResponseEntity.notFound().build();
