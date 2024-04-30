@@ -13,7 +13,7 @@ public class Date {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "user_date", nullable = false)
     private Timestamp date;
 
     @Column(name = "created_at", nullable = false)
