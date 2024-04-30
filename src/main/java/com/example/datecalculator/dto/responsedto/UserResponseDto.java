@@ -23,7 +23,6 @@ public class UserResponseDto {
             this.dates.add(new DateResponseDto(date));
         }
     }
-
     public Long getId() {
         return id;
     }

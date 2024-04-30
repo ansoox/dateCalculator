@@ -6,7 +6,6 @@ public class DateDto {
     private Long tagId;
     private Long userId;
     private Timestamp date;
-
     public Long getTagId() {
         return tagId;
     }

@@ -7,7 +7,6 @@ public class HistoryDto {
     private Timestamp firstDate;
     private Timestamp secondDate;
     private Timestamp diffInDays;
-
     public Long getUserId() {
         return userId;
     }
