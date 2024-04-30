@@ -19,6 +19,8 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
+import static com.example.datecalculator.utilities.Conctants.*;
+
 @Service
 public class DateService {
     private final DateRepository dateRepository;
@@ -42,36 +44,35 @@ public class DateService {
             date.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
             return dateRepository.save(date);
         } catch (Exception e) {
-            throw new ServerException("Some error on server occurred");
+            throw new ServerException(SERVER_ERROR_MSG);
         }
     }
 
     public Date addTagToDate(Long dateId, DateDto dateDto) {
         if (!dateRepository.findById(dateId).isPresent() || !tagRepository.findById(dateDto.getTagId()).isPresent()) {
-            throw new BadRequestException("Invalid info provided");
+            throw new BadRequestException(INVALID_INFO_MSG);
         }
         Date date = dateRepository.findById(dateId).get();
         Tag tag = tagRepository.findById(dateDto.getTagId()).get();
 
         if (date.getTags().contains(tag)) {
-            throw new BadRequestException("Invalid info provided");
+            throw new BadRequestException(INVALID_INFO_MSG);
         }
         try {
             date.getTags().add(tag);
-            //tag.getDates().add(date);
             date.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
             tag.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
             tagRepository.save(tag);
             return dateRepository.save(date);
         } catch (Exception e) {
-            throw new ServerException("Some error on server occurred");
+            throw new ServerException(SERVER_ERROR_MSG);
         }
     }
 
     public Date updateDate(Long id, DateDto dateDto) {
         Optional<Date> optionalDate = dateRepository.findById(id);
         if (!optionalDate.isPresent()) {
-            throw new NotFoundException("Required resources are not found");
+            throw new NotFoundException(NOT_FOUND_MSG);
         } else {
             try {
                 Date date = optionalDate.get();
@@ -86,7 +87,7 @@ public class DateService {
                 dateRepository.save(date);
                 return date;
             } catch (Exception e) {
-                throw new ServerException("Some error on server occurred");
+                throw new ServerException(SERVER_ERROR_MSG);
             }
         }
     }
@@ -94,13 +95,13 @@ public class DateService {
     public void deleteDate(Long id) {
         Optional<Date> optionalDate = dateRepository.findById(id);
         if (!optionalDate.isPresent()) {
-            throw new NotFoundException("Required resources are not found");
+            throw new NotFoundException(NOT_FOUND_MSG);
         } else {
             try {
                 Date date = optionalDate.get();
                 dateRepository.delete(date);
             } catch (Exception e) {
-                throw new ServerException("Some error on server occurred");
+                throw new ServerException(SERVER_ERROR_MSG);
             }
         }
     }
@@ -109,7 +110,7 @@ public class DateService {
         try {
             return dateRepository.findAll();
         } catch (Exception e) {
-            throw new ServerException("Some error on server occurred");
+            throw new ServerException(SERVER_ERROR_MSG);
         }
     }
 
@@ -117,7 +118,7 @@ public class DateService {
         if (dateRepository.findById(id).isPresent()) {
             return dateRepository.findById(id).get();
         } else {
-            throw new BadRequestException("Invalid info provided");
+            throw new BadRequestException(INVALID_INFO_MSG);
         }
     }
 
@@ -125,7 +126,7 @@ public class DateService {
         try {
             return tagRepository.findByDateId(dateId);
         } catch (Exception e) {
-            throw new ServerException("Some error on server occurred");
+            throw new ServerException(SERVER_ERROR_MSG);
         }
     }
 }

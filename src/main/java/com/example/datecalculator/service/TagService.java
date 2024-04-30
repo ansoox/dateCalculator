@@ -15,6 +15,8 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
+import static com.example.datecalculator.utilities.Conctants.*;
+
 @Service
 public class TagService {
     private final TagRepository tagRepository;
@@ -28,7 +30,7 @@ public class TagService {
 
     public Tag addTag(TagDto tagDto) {
         if (tagRepository.searchByTagName(tagDto.getTagName()) != null) {
-            throw new ServerException("Some error on server occurred");
+            throw new ServerException(SERVER_ERROR_MSG);
         }
         try {
             Tag tag = new Tag();
@@ -38,7 +40,7 @@ public class TagService {
             tagRepository.save(tag);
             return tag;
         } catch (Exception e) {
-            throw new ServerException("Some error on server occurred");
+            throw new ServerException(SERVER_ERROR_MSG);
         }
     }
 
@@ -46,14 +48,14 @@ public class TagService {
         if (tagRepository.findById(id).isPresent()) {
             return tagRepository.findById(id).get();
         } else {
-            throw new BadRequestException("Invalid info provided");
+            throw new BadRequestException(INVALID_INFO_MSG);
         }
     }
 
     public Tag updateTag(Long id, String name) {
         Optional<Tag> optionalTag = tagRepository.findById(id);
         if (!optionalTag.isPresent()) {
-            throw new NotFoundException("Required resources are not found");
+            throw new NotFoundException(NOT_FOUND_MSG);
         } else {
             try {
                 Tag tag = optionalTag.get();
@@ -63,14 +65,13 @@ public class TagService {
                 for (Date date : tag.getDates()) {
                     List<Tag> tags = date.getTags();
                     tags.remove(tag);
-                    //tags.removeIf(t -> t.getId().equals(tag.getId()));
                     tags.add(tag);
                     dateRepository.save(date);
                 }
                 tagRepository.save(tag);
                 return tag;
             } catch (Exception e) {
-                throw new ServerException("Some error on server occurred");
+                throw new ServerException(SERVER_ERROR_MSG);
             }
         }
     }
@@ -78,7 +79,7 @@ public class TagService {
     public void deleteTag(Long id) {
         Optional<Tag> optionalTag = tagRepository.findById(id);
         if (!optionalTag.isPresent()) {
-            throw new NotFoundException("Required resources are not found");
+            throw new NotFoundException(NOT_FOUND_MSG);
         } else {
             try {
                 Tag tag = optionalTag.get();
@@ -88,7 +89,7 @@ public class TagService {
                 }
                 tagRepository.delete(tag);
             } catch (Exception e) {
-                throw new ServerException("Some error on server occurred");
+                throw new ServerException(SERVER_ERROR_MSG);
             }
         }
     }
@@ -97,7 +98,7 @@ public class TagService {
         try {
             return tagRepository.findAll();
         } catch (Exception e) {
-            throw new ServerException("Some error on server occurred");
+            throw new ServerException(SERVER_ERROR_MSG);
         }
     }
 
@@ -105,7 +106,7 @@ public class TagService {
         try {
             return dateRepository.findByTagId(tagId);
         } catch (Exception e) {
-            throw new ServerException("Some error on server occurred");
+            throw new ServerException(SERVER_ERROR_MSG);
         }
     }
 }

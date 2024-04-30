@@ -40,7 +40,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     public UserResponseDto getUserById(@PathVariable(name = "id") Long id) {
-            return new UserResponseDto(userService.findById(id));
+        return new UserResponseDto(userService.findById(id));
     }
 
     @GetMapping("/search")

@@ -15,7 +15,6 @@ import com.example.datecalculator.model.User;
 import com.example.datecalculator.dto.UserDto;
 import com.example.datecalculator.repository.UserRepository;
 import com.example.datecalculator.repository.DateRepository;
-import com.example.datecalculator.repository.HistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.Timestamp;
@@ -25,20 +24,19 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import static com.example.datecalculator.utilities.Conctants.*;
+
 @Service
 public class UserService {
     private final UserRepository userRepository;
     private final DateRepository dateRepository;
-    private final HistoryRepository historyRepository;
     private final EntityCache<Long, Object> entityCache;
 
     @Autowired
     public UserService(UserRepository userRepository, DateRepository dateRepository,
-                       HistoryRepository historyRepository,
                        EntityCache<Long, Object> entityCache) {
         this.userRepository = userRepository;
         this.dateRepository = dateRepository;
-        this.historyRepository = historyRepository;
         this.entityCache = entityCache;
     }
 
@@ -51,14 +49,14 @@ public class UserService {
             } else {
                 Optional<User> optionalUser = userRepository.findById(id);
                 if (!optionalUser.isPresent()) {
-                    throw new BadRequestException("Invalid info provided");
+                    throw new BadRequestException(INVALID_INFO_MSG);
                 }
                 User user = optionalUser.get();
                 entityCache.put(hashCode, user);
                 return user;
             }
         } catch (Exception e) {
-            throw new ServerException("Some error on server occurred");
+            throw new ServerException(SERVER_ERROR_MSG);
         }
     }
 
@@ -72,13 +70,13 @@ public class UserService {
                 return Optional.empty();
             }
         } catch (Exception e) {
-            throw new ServerException("Some error on server occurred");
+            throw new ServerException(SERVER_ERROR_MSG);
         }
     }
 
     public List<UserResponseDto> findUsersByName(String name) {
         if (name == null || name.equals(" ")) {
-            throw new BadRequestException("Invalid info provided");
+            throw new BadRequestException(INVALID_INFO_MSG);
         } else {
             try {
                 List<UserResponseDto> response = new ArrayList<>();
@@ -87,7 +85,7 @@ public class UserService {
                 }
                 return response;
             } catch (Exception e) {
-                throw new ServerException("Some error on server occurred");
+                throw new ServerException(SERVER_ERROR_MSG);
             }
         }
     }
@@ -95,7 +93,7 @@ public class UserService {
     @Transactional
     public ResponseEntity<Object> addUsers(List<UserDto> users) {
         if (users == null || users.isEmpty()) {
-            throw new NotFoundException("Required resources are not found");
+            throw new NotFoundException(NOT_FOUND_MSG);
         }
 
         List<User> addedUsers = new ArrayList<>();
@@ -132,7 +130,7 @@ public class UserService {
             user.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
             return userRepository.save(user);
         } catch (Exception e) {
-            throw new ServerException("Some error on server occurred");
+            throw new ServerException(SERVER_ERROR_MSG);
         }
     }
 
@@ -140,7 +138,7 @@ public class UserService {
         entityCache.clear();
         Optional<User> optionalUser = userRepository.findById(id);
         if (!optionalUser.isPresent()) {
-            throw new NotFoundException("Required resources are not found");
+            throw new NotFoundException(NOT_FOUND_MSG);
         } else {
             try {
                 User user = optionalUser.get();
@@ -151,7 +149,7 @@ public class UserService {
                 userRepository.save(user);
                 return user;
             } catch (Exception e) {
-                throw new ServerException("Some error on server occurred");
+                throw new ServerException(SERVER_ERROR_MSG);
             }
         }
 
@@ -161,29 +159,25 @@ public class UserService {
         entityCache.clear();
         Optional<User> optionalUser = userRepository.findById(id);
         if (!optionalUser.isPresent()) {
-            throw new NotFoundException("Required resources are not found");
+            throw new NotFoundException(NOT_FOUND_MSG);
         }
         try {
             User user = optionalUser.get();
             userRepository.delete(user);
         } catch (Exception e) {
-            throw new ServerException("Some error on server occurred");
+            throw new ServerException(SERVER_ERROR_MSG);
         }
     }
 
     public List<Date> getDatesByUser(Long userId) {
         Optional<User> user = userRepository.findById(userId);
         if (!user.isPresent()) {
-            throw new BadRequestException("Invalid info provided");
+            throw new BadRequestException(INVALID_INFO_MSG);
         }
         try {
             return dateRepository.findByUserId(userId);
         } catch (Exception e) {
-            throw new ServerException("Some error on server occurred");
+            throw new ServerException(SERVER_ERROR_MSG);
         }
     }
-
-    //public List<History> getHistoriesByUser(Long userId) {
-    //    return historyRepository.findByUserId(userId);
-    //}
 }
