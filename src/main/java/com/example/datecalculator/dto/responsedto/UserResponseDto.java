@@ -12,7 +12,6 @@ public class UserResponseDto {
     private String name;
     private Timestamp createdAt;
     private Timestamp updatedAt;
-    //private List<History> historyList = new ArrayList<>();
     private List<DateResponseDto> dates = new ArrayList<>();
 
     public UserResponseDto(User user) {
@@ -20,7 +19,6 @@ public class UserResponseDto {
         this.name = user.getName();
         this.createdAt = user.getCreatedAt();
         this.updatedAt = user.getUpdatedAt();
-        //this.historyList = user.getHistoryList();
         for (Date date : user.getDates()) {
             this.dates.add(new DateResponseDto(date));
         }
@@ -57,14 +55,6 @@ public class UserResponseDto {
     public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
     }
-
-//    public List<History> getHistoryList() {
-//        return historyList;
-//    }
-
-//    public void setHistoryList(List<History> historyList) {
-//        this.historyList = historyList;
-//    }
 
     public List<DateResponseDto> getDates() {
         return dates;

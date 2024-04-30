@@ -6,13 +6,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class RussianDateFormatter extends Formatter {
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd MMMM yyyy HH:mm:ss");
+    private SimpleDateFormat format = new SimpleDateFormat("dd MMMM yyyy HH:mm:ss");
 
     @Override
-    public String format(LogRecord record) {
+    public String format(LogRecord logRecord) {
         return String.format("[%s] %-1s - %s%n",
-                DATE_FORMAT.format(new Date(record.getMillis())),
-                record.getLevel().getLocalizedName(),
-                formatMessage(record));
+                format.format(new Date(logRecord.getMillis())),
+                logRecord.getLevel().getLocalizedName(),
+                formatMessage(logRecord));
     }
 }

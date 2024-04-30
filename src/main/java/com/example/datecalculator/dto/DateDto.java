@@ -1,9 +1,6 @@
 package com.example.datecalculator.dto;
 
-import com.example.datecalculator.model.Tag;
-
 import java.sql.Timestamp;
-import java.util.List;
 
 public class DateDto {
     private Long tagId;

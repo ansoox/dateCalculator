@@ -1,7 +1,5 @@
 package com.example.datecalculator.dto;
 
-import java.sql.Timestamp;
-
 public class TagDto {
     private Long id;
     private String tagName;
