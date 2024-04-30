@@ -35,7 +35,7 @@ public class Date {
     )
     private List<Tag> tags = new ArrayList<>();
 
-    public List<Tag> getTags(){
+    public List<Tag> getTags() {
         return this.tags;
     }
 

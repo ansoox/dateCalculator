@@ -1,4 +1,4 @@
-package com.example.datecalculator.dto.ResponseDto;
+package com.example.datecalculator.dto.responsedto;
 
 import com.example.datecalculator.model.Date;
 import com.example.datecalculator.model.Tag;

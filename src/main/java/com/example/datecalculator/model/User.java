@@ -30,7 +30,7 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Date> dates;
 
-    public List<Date> getDates(){
+    public List<Date> getDates() {
         return dates;
     }
 
@@ -68,9 +68,5 @@ public class User {
 
     public Timestamp getUpdatedAt() {
         return updatedAt;
-    }
-
-    public List<History> getHistoryList() {
-        return historyList;
     }
 }

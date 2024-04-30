@@ -1,7 +1,8 @@
-package com.example.datecalculator.dto.ResponseDto;
+package com.example.datecalculator.dto.responsedto;
+
 import com.example.datecalculator.model.Date;
-import com.example.datecalculator.model.History;
 import com.example.datecalculator.model.User;
+
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,17 +13,16 @@ public class UserResponseDto {
     private Timestamp createdAt;
     private Timestamp updatedAt;
     //private List<History> historyList = new ArrayList<>();
-    private List<DateListResponseDto> dates = new ArrayList<>();
+    private List<DateResponseDto> dates = new ArrayList<>();
 
-
-    public UserResponseDto(User user){
+    public UserResponseDto(User user) {
         this.id = user.getId();
         this.name = user.getName();
         this.createdAt = user.getCreatedAt();
         this.updatedAt = user.getUpdatedAt();
         //this.historyList = user.getHistoryList();
         for (Date date : user.getDates()) {
-            this.dates.add(new DateListResponseDto(date));
+            this.dates.add(new DateResponseDto(date));
         }
     }
 
@@ -66,11 +66,11 @@ public class UserResponseDto {
 //        this.historyList = historyList;
 //    }
 
-    public List<DateListResponseDto> getDates() {
+    public List<DateResponseDto> getDates() {
         return dates;
     }
 
-    public void setDates(List<DateListResponseDto> dates) {
+    public void setDates(List<DateResponseDto> dates) {
         this.dates = dates;
     }
 }

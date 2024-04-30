@@ -1,14 +1,12 @@
 package com.example.datecalculator.controller;
 
-import com.example.datecalculator.dto.ResponseDto.DateListResponseDto;
-import com.example.datecalculator.dto.ResponseDto.TagListResponseDto;
-import com.example.datecalculator.dto.ResponseDto.UserListResponseDto;
-import com.example.datecalculator.dto.ResponseDto.UserResponseDto;
-import com.example.datecalculator.model.History;
+import com.example.datecalculator.dto.responsedto.DateListResponseDto;
+import com.example.datecalculator.dto.responsedto.UserResponseDto;
 import com.example.datecalculator.model.User;
 import com.example.datecalculator.model.Date;
 import com.example.datecalculator.dto.UserDto;
 import com.example.datecalculator.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/calculate/user")
@@ -27,42 +27,47 @@ public class UserController {
     }
 
     @GetMapping
-    public List<UserListResponseDto> getALL() {
-        List<UserListResponseDto> response = new ArrayList<>();
-        for (User user : userService.getAllUsers()) {
-            response.add(new UserListResponseDto(user));
+    public ResponseEntity<List<UserResponseDto>> getAll() {
+        Optional<List<User>> optionalUsers = userService.getAllUsers();
+        if (optionalUsers.isPresent()) {
+            List<UserResponseDto> response = optionalUsers.get().stream()
+                    .map(UserResponseDto::new)
+                    .collect(Collectors.toList());
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return response;
     }
 
     @GetMapping("/{id}")
     public UserResponseDto getUserById(@PathVariable(name = "id") Long id) {
-        User user = userService.findById(id);
-        return new UserResponseDto(user);
+            return new UserResponseDto(userService.findById(id));
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<UserResponseDto>> searchUsersByName(@RequestParam String name) {
+    public List<UserResponseDto> searchUsersByName(@RequestParam String name) {
         List<UserResponseDto> users = userService.findUsersByName(name);
-        return ResponseEntity.ok(users);
+        return users;
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody UserDto userDto) {
-        User createdUser = userService.addUser(userDto);
-        return ResponseEntity.ok(createdUser);
+    public User createUser(@RequestBody UserDto userDto) {
+        return userService.addUser(userDto);
+    }
+
+    @PostMapping("/bulk")
+    public ResponseEntity<Object> createUsers(@RequestBody List<UserDto> users) {
+        return userService.addUsers(users);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable(name = "id") Long id) {
-        boolean isDeleted = userService.deleteUser(id);
-        return isDeleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
+    public void deleteUser(@PathVariable(name = "id") Long id) {
+        userService.deleteUser(id);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@RequestBody UserDto userDto, @PathVariable(name = "id") Long id) {
-        User updatedUser = userService.updateUser(id, userDto.getName(), userDto.getPassword());
-        return updatedUser != null ? ResponseEntity.ok(updatedUser) : ResponseEntity.notFound().build();
+    public User updateUser(@RequestBody UserDto userDto, @PathVariable(name = "id") Long id) {
+        return userService.updateUser(id, userDto.getName(), userDto.getPassword());
     }
 
     @GetMapping("/getUserDates/{id}")

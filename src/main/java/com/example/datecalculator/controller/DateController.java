@@ -1,13 +1,12 @@
 package com.example.datecalculator.controller;
 
-import com.example.datecalculator.dto.ResponseDto.DateListResponseDto;
-import com.example.datecalculator.dto.ResponseDto.DateResponseDto;
-import com.example.datecalculator.dto.ResponseDto.TagListResponseDto;
+import com.example.datecalculator.dto.responsedto.DateListResponseDto;
+import com.example.datecalculator.dto.responsedto.DateResponseDto;
+import com.example.datecalculator.dto.responsedto.TagListResponseDto;
 import com.example.datecalculator.model.Date;
 import com.example.datecalculator.model.Tag;
 import com.example.datecalculator.dto.DateDto;
 import com.example.datecalculator.service.DateService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,33 +34,28 @@ public class DateController {
 
     @GetMapping("/{id}")
     public DateResponseDto getDateById(@PathVariable(name = "id") Long id) {
-        Date date = dateService.findById(id);
-        return new DateResponseDto(date);
+        return new DateResponseDto(dateService.findById(id));
     }
 
     @PostMapping
     public DateResponseDto addDate(@RequestBody DateDto dateDto) {
-        Date createdDate = dateService.addDate(dateDto);
-        return new DateResponseDto(createdDate);
+        return new DateResponseDto(dateService.addDate(dateDto));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteDate(@PathVariable(name = "id") Long id) {
-        boolean isDeleted = dateService.deleteDate(id);
-        return isDeleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
+    public void deleteDate(@PathVariable(name = "id") Long id) {
+        dateService.deleteDate(id);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DateResponseDto> updateDate(@RequestBody DateDto dateDto, @PathVariable(name = "id") Long id) {
+    public DateResponseDto updateDate(@RequestBody DateDto dateDto, @PathVariable(name = "id") Long id) {
         Date updatedDate = dateService.updateDate(id, dateDto);
-        DateResponseDto responseDate = new DateResponseDto(updatedDate);
-        return ResponseEntity.ok(responseDate);
+        return new DateResponseDto(updatedDate);
     }
 
     @PatchMapping("/{id}")
     public DateResponseDto updateUser(@PathVariable Long id, @RequestBody DateDto dateDto) {
-        Date updatedDate = dateService.addTagToDate(id, dateDto);
-        return new DateResponseDto(updatedDate);
+        return new DateResponseDto(dateService.addTagToDate(id, dateDto));
     }
 
     @GetMapping("/getDateTags/{id}")

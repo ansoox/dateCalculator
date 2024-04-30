@@ -1,4 +1,4 @@
-package com.example.datecalculator.dto.ResponseDto;
+package com.example.datecalculator.dto.responsedto;
 
 import com.example.datecalculator.model.Date;
 
@@ -8,7 +8,7 @@ public class DateListResponseDto {
     private Long id;
     private Timestamp date;
 
-    public DateListResponseDto(Date date){
+    public DateListResponseDto(Date date) {
         this.id = date.getId();
         this.date = date.getDate();
     }

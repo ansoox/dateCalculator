@@ -1,17 +1,12 @@
 package com.example.datecalculator.controller;
 
-import com.example.datecalculator.dto.DateDto;
-import com.example.datecalculator.dto.ResponseDto.DateListResponseDto;
-import com.example.datecalculator.dto.ResponseDto.TagListResponseDto;
-import com.example.datecalculator.dto.ResponseDto.TagResponseDto;
-import com.example.datecalculator.dto.ResponseDto.UserListResponseDto;
+import com.example.datecalculator.dto.responsedto.DateListResponseDto;
+import com.example.datecalculator.dto.responsedto.TagListResponseDto;
+import com.example.datecalculator.dto.responsedto.TagResponseDto;
 import com.example.datecalculator.model.Date;
 import com.example.datecalculator.model.Tag;
 import com.example.datecalculator.dto.TagDto;
-import com.example.datecalculator.model.User;
-import com.example.datecalculator.service.DateService;
 import com.example.datecalculator.service.TagService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,30 +34,26 @@ public class TagController {
 
     @GetMapping("/{id}")
     public TagResponseDto getTagById(@PathVariable(name = "id") Long id) {
-        Tag tag = tagService.findById(id);
-        return new TagResponseDto(tag);
+        return new TagResponseDto(tagService.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<Tag> addTag(@RequestBody TagDto tagDto) {
-        Tag createdTag = tagService.addTag(tagDto);
-        return ResponseEntity.ok(createdTag);
+    public Tag addTag(@RequestBody TagDto tagDto) {
+        return tagService.addTag(tagDto);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTag(@PathVariable(name = "id") Long id) {
-        boolean isDeleted = tagService.deleteTag(id);
-        return isDeleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
+    public void deleteTag(@PathVariable(name = "id") Long id) {
+        tagService.deleteTag(id);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Tag> updateTag(@RequestBody TagDto tagDto, @PathVariable(name = "id") Long id) {
-        Tag updatedTag = tagService.updateTag(id, tagDto.getTagName());
-        return updatedTag != null ? ResponseEntity.ok(updatedTag) : ResponseEntity.notFound().build();
+    public Tag updateTag(@RequestBody TagDto tagDto, @PathVariable(name = "id") Long id) {
+        return tagService.updateTag(id, tagDto.getTagName());
     }
 
     @GetMapping("/getTagDates/{id}")
-    public List<DateListResponseDto> getTagDates(@PathVariable (name = "id") Long id) {
+    public List<DateListResponseDto> getTagDates(@PathVariable(name = "id") Long id) {
         List<DateListResponseDto> response = new ArrayList<>();
         for (Date date : tagService.getDatesByTag(id)) {
             response.add(new DateListResponseDto(date));
