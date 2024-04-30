@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/calculate/user")
@@ -32,7 +31,7 @@ public class UserController {
         if (optionalUsers.isPresent()) {
             List<UserResponseDto> response = optionalUsers.get().stream()
                     .map(UserResponseDto::new)
-                    .collect(Collectors.toList());
+                    .toList();
             return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -46,8 +45,7 @@ public class UserController {
 
     @GetMapping("/search")
     public List<UserResponseDto> searchUsersByName(@RequestParam String name) {
-        List<UserResponseDto> users = userService.findUsersByName(name);
-        return users;
+        return userService.findUsersByName(name);
     }
 
     @PostMapping
@@ -78,10 +76,4 @@ public class UserController {
         }
         return response;
     }
-
-//    @GetMapping("/getUserHistories/{id}")
-//    public ResponseEntity<List<History>> getUserHistories(@PathVariable (name = "id") Long id) {
-//        List<History> histories = userService.getHistoriesByUser(id);
-//        return histories != null ? ResponseEntity.ok(histories) : ResponseEntity.notFound().build();
-//    }
 }
