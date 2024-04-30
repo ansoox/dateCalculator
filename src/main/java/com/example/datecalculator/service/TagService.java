@@ -45,8 +45,9 @@ public class TagService {
     }
 
     public Tag findById(Long id) {
-        if (tagRepository.findById(id).isPresent()) {
-            return tagRepository.findById(id).get();
+        Optional<Tag> foundTag = tagRepository.findById(id);
+        if (foundTag.isPresent()) {
+            return foundTag.get();
         } else {
             throw new BadRequestException(INVALID_INFO_MSG);
         }
@@ -54,7 +55,7 @@ public class TagService {
 
     public Tag updateTag(Long id, String name) {
         Optional<Tag> optionalTag = tagRepository.findById(id);
-        if (!optionalTag.isPresent()) {
+        if (optionalTag.isEmpty()) {
             throw new NotFoundException(NOT_FOUND_MSG);
         } else {
             try {
@@ -78,7 +79,7 @@ public class TagService {
 
     public void deleteTag(Long id) {
         Optional<Tag> optionalTag = tagRepository.findById(id);
-        if (!optionalTag.isPresent()) {
+        if (optionalTag.isEmpty()) {
             throw new NotFoundException(NOT_FOUND_MSG);
         } else {
             try {

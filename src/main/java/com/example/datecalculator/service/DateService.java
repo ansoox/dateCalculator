@@ -49,11 +49,13 @@ public class DateService {
     }
 
     public Date addTagToDate(Long dateId, DateDto dateDto) {
-        if (!dateRepository.findById(dateId).isPresent() || !tagRepository.findById(dateDto.getTagId()).isPresent()) {
+        Optional<Date> optionalDate = dateRepository.findById(dateId);
+        Optional<Tag> optionalTag = tagRepository.findById(dateDto.getTagId());
+        if (optionalDate.isEmpty() || optionalTag.isEmpty()) {
             throw new BadRequestException(INVALID_INFO_MSG);
         }
-        Date date = dateRepository.findById(dateId).get();
-        Tag tag = tagRepository.findById(dateDto.getTagId()).get();
+        Date date = optionalDate.get();
+        Tag tag = optionalTag.get();
 
         if (date.getTags().contains(tag)) {
             throw new BadRequestException(INVALID_INFO_MSG);
@@ -71,7 +73,7 @@ public class DateService {
 
     public Date updateDate(Long id, DateDto dateDto) {
         Optional<Date> optionalDate = dateRepository.findById(id);
-        if (!optionalDate.isPresent()) {
+        if (optionalDate.isEmpty()) {
             throw new NotFoundException(NOT_FOUND_MSG);
         } else {
             try {
@@ -94,7 +96,7 @@ public class DateService {
 
     public void deleteDate(Long id) {
         Optional<Date> optionalDate = dateRepository.findById(id);
-        if (!optionalDate.isPresent()) {
+        if (optionalDate.isEmpty()) {
             throw new NotFoundException(NOT_FOUND_MSG);
         } else {
             try {
@@ -115,8 +117,9 @@ public class DateService {
     }
 
     public Date findById(Long id) {
-        if (dateRepository.findById(id).isPresent()) {
-            return dateRepository.findById(id).get();
+        Optional<Date> foundDate = dateRepository.findById(id);
+        if (foundDate.isPresent()) {
+            return foundDate.get();
         } else {
             throw new BadRequestException(INVALID_INFO_MSG);
         }
