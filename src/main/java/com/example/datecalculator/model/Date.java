@@ -14,7 +14,7 @@ public class Date {
     private Long id;
 
     @Column(name = "user_date", nullable = false)
-    private Timestamp date;
+    private Timestamp userDate;
 
     @Column(name = "created_at", nullable = false)
     private Timestamp createdAt;
@@ -44,7 +44,7 @@ public class Date {
     }
 
     public void setDate(Timestamp date) {
-        this.date = date;
+        this.userDate = date;
     }
 
     public Timestamp getCreatedAt() {
@@ -68,7 +68,7 @@ public class Date {
     }
 
     public Timestamp getDate() {
-        return date;
+        return userDate;
     }
 
     public User getUser() {

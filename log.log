@@ -225,3 +225,5 @@ INFO: Result of getAllTags: success
 [02 мая 2024 17:24:41] INFO - Result of deleteUser: success 
 [02 мая 2024 17:24:46] INFO - Running method deleteUser with args [19]
 [02 мая 2024 17:24:46] INFO - Result of deleteUser: success 
+[02 мая 2024 18:23:03] INFO - Running method addUsers with args [[com.example.datecalculator.dto.UserDto@59648db7, com.example.datecalculator.dto.UserDto@713561ce]]
+[02 мая 2024 18:23:03] INFO - Result of addUsers: success 
