@@ -89,7 +89,7 @@ class DateServiceDiffblueTest {
         Date actualAddDateResult = dateService.addDate(dateDto);
 
         // Assert
-        verify(userRepository).findById(1L);
+        verify(userRepository).findById(eq(1L));
         verify(dateRepository).save(isA(Date.class));
         assertSame(date, actualAddDateResult);
     }
@@ -117,7 +117,7 @@ class DateServiceDiffblueTest {
 
         // Act and Assert
         assertThrows(ServerException.class, () -> dateService.addDate(dateDto));
-        verify(userRepository).findById(1L);
+        verify(userRepository).findById(eq(1L));
         verify(dateRepository).save(isA(Date.class));
     }
 
@@ -137,7 +137,7 @@ class DateServiceDiffblueTest {
 
         // Act and Assert
         assertThrows(ServerException.class, () -> dateService.addDate(dateDto));
-        verify(userRepository).findById(1L);
+        verify(userRepository).findById(eq(1L));
     }
 
     /**
@@ -195,8 +195,8 @@ class DateServiceDiffblueTest {
         Date actualAddTagToDateResult = dateService.addTagToDate(1L, dateDto);
 
         // Assert
-        verify(dateRepository, atLeast(1)).findById(1L);
-        verify(tagRepository, atLeast(1)).findById(1L);
+        verify(dateRepository, atLeast(1)).findById(eq(1L));
+        verify(tagRepository, atLeast(1)).findById(eq(1L));
         verify(dateRepository).save(isA(Date.class));
         verify(tagRepository).save(isA(Tag.class));
         assertSame(date2, actualAddTagToDateResult);
@@ -250,8 +250,8 @@ class DateServiceDiffblueTest {
 
         // Act and Assert
         assertThrows(ServerException.class, () -> dateService.addTagToDate(1L, dateDto));
-        verify(dateRepository, atLeast(1)).findById(1L);
-        verify(tagRepository, atLeast(1)).findById(1L);
+        verify(dateRepository, atLeast(1)).findById(eq(1L));
+        verify(tagRepository, atLeast(1)).findById(eq(1L));
         verify(tagRepository).save(isA(Tag.class));
     }
 
@@ -278,7 +278,7 @@ class DateServiceDiffblueTest {
 
         // Act and Assert
         assertThrows(BadRequestException.class, () -> dateService.addTagToDate(1L, dateDto));
-        verify(dateRepository).findById(1L);
+        verify(dateRepository).findById(eq(1L));
     }
 
     /**
@@ -310,8 +310,8 @@ class DateServiceDiffblueTest {
 
         // Act and Assert
         assertThrows(BadRequestException.class, () -> dateService.addTagToDate(1L, dateDto));
-        verify(dateRepository).findById(1L);
-        verify(tagRepository).findById(1L);
+        verify(dateRepository).findById(eq(1L));
+        verify(tagRepository).findById(eq(1L));
     }
 
     /**
@@ -356,7 +356,7 @@ class DateServiceDiffblueTest {
         Date actualUpdateDateResult = dateService.updateDate(1L, dateDto);
 
         // Assert
-        verify(dateRepository).findById(1L);
+        verify(dateRepository).findById(eq(1L));
         verify(dateRepository).save(isA(Date.class));
         assertSame(date, actualUpdateDateResult);
     }
@@ -389,7 +389,7 @@ class DateServiceDiffblueTest {
 
         // Act and Assert
         assertThrows(ServerException.class, () -> dateService.updateDate(1L, dateDto));
-        verify(dateRepository).findById(1L);
+        verify(dateRepository).findById(eq(1L));
         verify(dateRepository).save(isA(Date.class));
     }
 
@@ -409,7 +409,7 @@ class DateServiceDiffblueTest {
 
         // Act and Assert
         assertThrows(NotFoundException.class, () -> dateService.updateDate(1L, dateDto));
-        verify(dateRepository).findById(1L);
+        verify(dateRepository).findById(eq(1L));
     }
 
     /**
@@ -438,7 +438,7 @@ class DateServiceDiffblueTest {
 
         // Assert that nothing has changed
         verify(dateRepository).delete(isA(Date.class));
-        verify(dateRepository).findById(1L);
+        verify(dateRepository).findById(eq(1L));
     }
 
     /**
@@ -465,7 +465,7 @@ class DateServiceDiffblueTest {
         // Act and Assert
         assertThrows(ServerException.class, () -> dateService.deleteDate(1L));
         verify(dateRepository).delete(isA(Date.class));
-        verify(dateRepository).findById(1L);
+        verify(dateRepository).findById(eq(1L));
     }
 
     /**
@@ -479,7 +479,7 @@ class DateServiceDiffblueTest {
 
         // Act and Assert
         assertThrows(NotFoundException.class, () -> dateService.deleteDate(1L));
-        verify(dateRepository).findById(1L);
+        verify(dateRepository).findById(eq(1L));
     }
 
     /**
@@ -537,7 +537,7 @@ class DateServiceDiffblueTest {
         Date actualFindByIdResult = dateService.findById(1L);
 
         // Assert
-        verify(dateRepository, atLeast(1)).findById(1L);
+        verify(dateRepository, atLeast(1)).findById(eq(1L));
         assertSame(date, actualFindByIdResult);
     }
 
@@ -552,7 +552,7 @@ class DateServiceDiffblueTest {
 
         // Act and Assert
         assertThrows(BadRequestException.class, () -> dateService.findById(1L));
-        verify(dateRepository).findById(1L);
+        verify(dateRepository).findById(eq(1L));
     }
 
     /**
@@ -565,7 +565,7 @@ class DateServiceDiffblueTest {
 
         // Act and Assert
         assertThrows(ServerException.class, () -> dateService.findById(1L));
-        verify(dateRepository).findById(1L);
+        verify(dateRepository).findById(eq(1L));
     }
 
     /**
@@ -581,7 +581,7 @@ class DateServiceDiffblueTest {
         List<Tag> actualTagsByDate = dateService.getTagsByDate(1L);
 
         // Assert
-        verify(tagRepository).findByDateId(1L);
+        verify(tagRepository).findByDateId(eq(1L));
         assertTrue(actualTagsByDate.isEmpty());
         assertSame(tagList, actualTagsByDate);
     }
@@ -596,6 +596,6 @@ class DateServiceDiffblueTest {
 
         // Act and Assert
         assertThrows(ServerException.class, () -> dateService.getTagsByDate(1L));
-        verify(tagRepository).findByDateId(1L);
+        verify(tagRepository).findByDateId(eq(1L));
     }
 }

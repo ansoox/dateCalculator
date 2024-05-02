@@ -66,7 +66,7 @@ class TagServiceDiffblueTest {
 
         // Act and Assert
         assertThrows(ServerException.class, () -> tagService.addTag(tagDto));
-        verify(tagRepository).searchByTagName("Tag Name");
+        verify(tagRepository).searchByTagName(eq("Tag Name"));
     }
 
     /**
@@ -83,7 +83,7 @@ class TagServiceDiffblueTest {
 
         // Act and Assert
         assertThrows(NotFoundException.class, () -> tagService.addTag(tagDto));
-        verify(tagRepository).searchByTagName("Tag Name");
+        verify(tagRepository).searchByTagName(eq("Tag Name"));
     }
 
     /**
@@ -103,7 +103,7 @@ class TagServiceDiffblueTest {
         Tag actualFindByIdResult = tagService.findById(1L);
 
         // Assert
-        verify(tagRepository, atLeast(1)).findById(1L);
+        verify(tagRepository, atLeast(1)).findById(eq(1L));
         assertSame(tag, actualFindByIdResult);
     }
 
@@ -118,7 +118,7 @@ class TagServiceDiffblueTest {
 
         // Act and Assert
         assertThrows(BadRequestException.class, () -> tagService.findById(1L));
-        verify(tagRepository).findById(1L);
+        verify(tagRepository).findById(eq(1L));
     }
 
     /**
@@ -131,7 +131,7 @@ class TagServiceDiffblueTest {
 
         // Act and Assert
         assertThrows(ServerException.class, () -> tagService.findById(1L));
-        verify(tagRepository).findById(1L);
+        verify(tagRepository).findById(eq(1L));
     }
 
     /**
@@ -149,7 +149,7 @@ class TagServiceDiffblueTest {
 
         // Act and Assert
         assertThrows(ServerException.class, () -> tagService.updateTag(1L, "Name"));
-        verify(tagRepository).findById(1L);
+        verify(tagRepository).findById(eq(1L));
     }
 
     /**
@@ -181,9 +181,9 @@ class TagServiceDiffblueTest {
         // Assert
         verify(tag).getDates();
         verify(tag).setCreatedAt(isA(Timestamp.class));
-        verify(tag, atLeast(1)).setName("Name");
+        verify(tag, atLeast(1)).setName(eq("Name"));
         verify(tag, atLeast(1)).setUpdatedAt(Mockito.<Timestamp>any());
-        verify(tagRepository).findById(1L);
+        verify(tagRepository).findById(eq(1L));
         verify(tagRepository).save(isA(Tag.class));
     }
 
@@ -243,9 +243,9 @@ class TagServiceDiffblueTest {
         // Assert
         verify(tag).getDates();
         verify(tag).setCreatedAt(isA(Timestamp.class));
-        verify(tag, atLeast(1)).setName("Name");
+        verify(tag, atLeast(1)).setName(eq("Name"));
         verify(tag, atLeast(1)).setUpdatedAt(Mockito.<Timestamp>any());
-        verify(tagRepository).findById(1L);
+        verify(tagRepository).findById(eq(1L));
         verify(dateRepository).save(isA(Date.class));
         verify(tagRepository).save(isA(Tag.class));
     }
@@ -261,7 +261,7 @@ class TagServiceDiffblueTest {
 
         // Act and Assert
         assertThrows(NotFoundException.class, () -> tagService.updateTag(1L, "Name"));
-        verify(tagRepository).findById(1L);
+        verify(tagRepository).findById(eq(1L));
     }
 
     /**
@@ -306,9 +306,9 @@ class TagServiceDiffblueTest {
         assertThrows(ServerException.class, () -> tagService.updateTag(1L, "Name"));
         verify(tag).getDates();
         verify(tag).setCreatedAt(isA(Timestamp.class));
-        verify(tag, atLeast(1)).setName("Name");
+        verify(tag, atLeast(1)).setName(eq("Name"));
         verify(tag, atLeast(1)).setUpdatedAt(Mockito.<Timestamp>any());
-        verify(tagRepository).findById(1L);
+        verify(tagRepository).findById(eq(1L));
         verify(dateRepository).save(isA(Date.class));
     }
 
@@ -327,7 +327,7 @@ class TagServiceDiffblueTest {
 
         // Act and Assert
         assertThrows(ServerException.class, () -> tagService.deleteTag(1L));
-        verify(tagRepository).findById(1L);
+        verify(tagRepository).findById(eq(1L));
     }
 
     /**
@@ -354,10 +354,10 @@ class TagServiceDiffblueTest {
         // Assert that nothing has changed
         verify(tag).getDates();
         verify(tag).setCreatedAt(isA(Timestamp.class));
-        verify(tag).setName("Name");
+        verify(tag).setName(eq("Name"));
         verify(tag).setUpdatedAt(isA(Timestamp.class));
         verify(tagRepository).delete(isA(Tag.class));
-        verify(tagRepository).findById(1L);
+        verify(tagRepository).findById(eq(1L));
     }
 
     /**
@@ -411,10 +411,10 @@ class TagServiceDiffblueTest {
         // Assert
         verify(tag).getDates();
         verify(tag).setCreatedAt(isA(Timestamp.class));
-        verify(tag).setName("Name");
+        verify(tag).setName(eq("Name"));
         verify(tag).setUpdatedAt(isA(Timestamp.class));
         verify(tagRepository).delete(isA(Tag.class));
-        verify(tagRepository).findById(1L);
+        verify(tagRepository).findById(eq(1L));
         verify(dateRepository).save(isA(Date.class));
     }
 
@@ -429,7 +429,7 @@ class TagServiceDiffblueTest {
 
         // Act and Assert
         assertThrows(NotFoundException.class, () -> tagService.deleteTag(1L));
-        verify(tagRepository).findById(1L);
+        verify(tagRepository).findById(eq(1L));
     }
 
     /**
@@ -468,9 +468,9 @@ class TagServiceDiffblueTest {
         assertThrows(ServerException.class, () -> tagService.deleteTag(1L));
         verify(tag).getDates();
         verify(tag).setCreatedAt(isA(Timestamp.class));
-        verify(tag).setName("Name");
+        verify(tag).setName(eq("Name"));
         verify(tag).setUpdatedAt(isA(Timestamp.class));
-        verify(tagRepository).findById(1L);
+        verify(tagRepository).findById(eq(1L));
         verify(dateRepository).save(isA(Date.class));
     }
 
@@ -518,7 +518,7 @@ class TagServiceDiffblueTest {
         List<Date> actualDatesByTag = tagService.getDatesByTag(1L);
 
         // Assert
-        verify(dateRepository).findByTagId(1L);
+        verify(dateRepository).findByTagId(eq(1L));
         assertTrue(actualDatesByTag.isEmpty());
         assertSame(dateList, actualDatesByTag);
     }
@@ -533,6 +533,6 @@ class TagServiceDiffblueTest {
 
         // Act and Assert
         assertThrows(ServerException.class, () -> tagService.getDatesByTag(1L));
-        verify(dateRepository).findByTagId(1L);
+        verify(dateRepository).findByTagId(eq(1L));
     }
 }

@@ -71,7 +71,7 @@ class UserServiceDiffblueTest {
 
         // Act and Assert
         assertThrows(ServerException.class, () -> userService.findById(1L));
-        verify(entityCache).get(1984L);
+        verify(entityCache).get(eq(1984L));
     }
 
     /**
@@ -84,7 +84,7 @@ class UserServiceDiffblueTest {
 
         // Act and Assert
         assertThrows(ServerException.class, () -> userService.findById(1L));
-        verify(entityCache).get(1984L);
+        verify(entityCache).get(eq(1984L));
     }
 
     /**
@@ -104,7 +104,7 @@ class UserServiceDiffblueTest {
         User actualFindByIdResult = userService.findById(1L);
 
         // Assert
-        verify(entityCache).get(1984L);
+        verify(entityCache).get(eq(1984L));
         assertSame(user, actualFindByIdResult);
     }
 
@@ -128,9 +128,9 @@ class UserServiceDiffblueTest {
         User actualFindByIdResult = userService.findById(1L);
 
         // Assert
-        verify(entityCache).get(1984L);
-        verify(entityCache).put(1984L, isA(Object.class));
-        verify(userRepository).findById(1L);
+        verify(entityCache).get(eq(1984L));
+        verify(entityCache).put(eq(1984L), isA(Object.class));
+        verify(userRepository).findById(eq(1L));
         assertSame(user, actualFindByIdResult);
     }
 
@@ -145,8 +145,8 @@ class UserServiceDiffblueTest {
 
         // Act and Assert
         assertThrows(ServerException.class, () -> userService.findById(1L));
-        verify(entityCache).get(1984L);
-        verify(userRepository).findById(1L);
+        verify(entityCache).get(eq(1984L));
+        verify(userRepository).findById(eq(1L));
     }
 
     /**
@@ -161,8 +161,8 @@ class UserServiceDiffblueTest {
 
         // Act and Assert
         assertThrows(ServerException.class, () -> userService.findById(1L));
-        verify(entityCache).get(1984L);
-        verify(userRepository).findById(1L);
+        verify(entityCache).get(eq(1984L));
+        verify(userRepository).findById(eq(1L));
     }
 
     /**
@@ -276,7 +276,7 @@ class UserServiceDiffblueTest {
         List<UserResponseDto> actualFindUsersByNameResult = userService.findUsersByName("Name");
 
         // Assert
-        verify(userRepository).searchByName("Name");
+        verify(userRepository).searchByName(eq("Name"));
         assertTrue(actualFindUsersByNameResult.isEmpty());
     }
 
@@ -298,7 +298,7 @@ class UserServiceDiffblueTest {
 
         // Act and Assert
         assertThrows(ServerException.class, () -> userService.findUsersByName("Name"));
-        verify(userRepository).searchByName("Name");
+        verify(userRepository).searchByName(eq("Name"));
     }
 
     /**
@@ -329,7 +329,7 @@ class UserServiceDiffblueTest {
 
         // Act and Assert
         assertThrows(ServerException.class, () -> userService.findUsersByName("Name"));
-        verify(userRepository).searchByName("Name");
+        verify(userRepository).searchByName(eq("Name"));
     }
 
     /**
@@ -368,10 +368,10 @@ class UserServiceDiffblueTest {
         verify(user).getName();
         verify(user).getUpdatedAt();
         verify(user).setCreatedAt(isA(Timestamp.class));
-        verify(user).setName(" ");
-        verify(user).setPassword("iloveyou");
+        verify(user).setName(eq(" "));
+        verify(user).setPassword(eq("iloveyou"));
         verify(user).setUpdatedAt(isA(Timestamp.class));
-        verify(userRepository).searchByName("Name");
+        verify(userRepository).searchByName(eq("Name"));
         assertEquals(1, actualFindUsersByNameResult.size());
         UserResponseDto getResult = actualFindUsersByNameResult.get(0);
         assertEquals("Name", getResult.getName());
@@ -428,10 +428,10 @@ class UserServiceDiffblueTest {
         verify(user2).getName();
         verify(user2).getUpdatedAt();
         verify(user2).setCreatedAt(isA(Timestamp.class));
-        verify(user2).setName(" ");
-        verify(user2).setPassword("iloveyou");
+        verify(user2).setName(eq(" "));
+        verify(user2).setPassword(eq("iloveyou"));
         verify(user2).setUpdatedAt(isA(Timestamp.class));
-        verify(userRepository).searchByName("Name");
+        verify(userRepository).searchByName(eq("Name"));
         assertEquals(1, actualFindUsersByNameResult.size());
         UserResponseDto getResult = actualFindUsersByNameResult.get(0);
         assertEquals("Name", getResult.getName());
@@ -511,10 +511,10 @@ class UserServiceDiffblueTest {
         verify(user3).getName();
         verify(user3).getUpdatedAt();
         verify(user3).setCreatedAt(isA(Timestamp.class));
-        verify(user3).setName(" ");
-        verify(user3).setPassword("iloveyou");
+        verify(user3).setName(eq(" "));
+        verify(user3).setPassword(eq("iloveyou"));
         verify(user3).setUpdatedAt(isA(Timestamp.class));
-        verify(userRepository).searchByName("Name");
+        verify(userRepository).searchByName(eq("Name"));
     }
 
     /**
@@ -694,7 +694,7 @@ class UserServiceDiffblueTest {
 
         // Assert
         verify(entityCache).clear();
-        verify(userRepository).findById(1L);
+        verify(userRepository).findById(eq(1L));
         verify(userRepository).save(isA(User.class));
         assertEquals("Name", actualUpdateUserResult.getName());
         assertEquals("iloveyou", actualUpdateUserResult.getPassword());
@@ -727,7 +727,7 @@ class UserServiceDiffblueTest {
         // Act and Assert
         assertThrows(NotFoundException.class, () -> userService.updateUser(1L, "Name", "iloveyou"));
         verify(entityCache).clear();
-        verify(userRepository).findById(1L);
+        verify(userRepository).findById(eq(1L));
     }
 
     /**
@@ -752,7 +752,7 @@ class UserServiceDiffblueTest {
         // Assert that nothing has changed
         verify(entityCache).clear();
         verify(userRepository).delete(isA(User.class));
-        verify(userRepository).findById(1L);
+        verify(userRepository).findById(eq(1L));
     }
 
     /**
@@ -781,7 +781,7 @@ class UserServiceDiffblueTest {
         // Act and Assert
         assertThrows(NotFoundException.class, () -> userService.deleteUser(1L));
         verify(entityCache).clear();
-        verify(userRepository).findById(1L);
+        verify(userRepository).findById(eq(1L));
     }
 
     /**
@@ -804,8 +804,8 @@ class UserServiceDiffblueTest {
         List<Date> actualDatesByUser = userService.getDatesByUser(1L);
 
         // Assert
-        verify(dateRepository).findByUserId(1L);
-        verify(userRepository).findById(1L);
+        verify(dateRepository).findByUserId(eq(1L));
+        verify(userRepository).findById(eq(1L));
         assertTrue(actualDatesByUser.isEmpty());
         assertSame(dateList, actualDatesByUser);
     }
@@ -827,8 +827,8 @@ class UserServiceDiffblueTest {
 
         // Act and Assert
         assertThrows(ServerException.class, () -> userService.getDatesByUser(1L));
-        verify(dateRepository).findByUserId(1L);
-        verify(userRepository).findById(1L);
+        verify(dateRepository).findByUserId(eq(1L));
+        verify(userRepository).findById(eq(1L));
     }
 
     /**
@@ -842,6 +842,6 @@ class UserServiceDiffblueTest {
 
         // Act and Assert
         assertThrows(BadRequestException.class, () -> userService.getDatesByUser(1L));
-        verify(userRepository).findById(1L);
+        verify(userRepository).findById(eq(1L));
     }
 }

@@ -83,7 +83,7 @@ class HistoryServiceDiffblueTest {
         History actualAddHistoryResult = historyService.addHistory(historyDto);
 
         // Assert
-        verify(userRepository).findById(1L);
+        verify(userRepository).findById(eq(1L));
         verify(historyRepository).save(isA(History.class));
         assertSame(history, actualAddHistoryResult);
     }
@@ -111,7 +111,7 @@ class HistoryServiceDiffblueTest {
 
         // Act and Assert
         assertThrows(RuntimeException.class, () -> historyService.addHistory(historyDto));
-        verify(userRepository).findById(1L);
+        verify(userRepository).findById(eq(1L));
         verify(historyRepository).save(isA(History.class));
     }
 
@@ -131,7 +131,7 @@ class HistoryServiceDiffblueTest {
 
         // Act and Assert
         assertThrows(RuntimeException.class, () -> historyService.addHistory(historyDto));
-        verify(userRepository).findById(1L);
+        verify(userRepository).findById(eq(1L));
     }
 
     /**
@@ -147,7 +147,7 @@ class HistoryServiceDiffblueTest {
         List<History> actualHistoryByUserId = historyService.getHistoryByUserId(1L);
 
         // Assert
-        verify(historyRepository).findByUserId(1L);
+        verify(historyRepository).findByUserId(eq(1L));
         assertTrue(actualHistoryByUserId.isEmpty());
         assertSame(historyList, actualHistoryByUserId);
     }
@@ -162,7 +162,7 @@ class HistoryServiceDiffblueTest {
 
         // Act and Assert
         assertThrows(RuntimeException.class, () -> historyService.getHistoryByUserId(1L));
-        verify(historyRepository).findByUserId(1L);
+        verify(historyRepository).findByUserId(eq(1L));
     }
 
     /**
@@ -211,7 +211,7 @@ class HistoryServiceDiffblueTest {
         History actualUpdateHistoryResult = historyService.updateHistory(1L, historyDto);
 
         // Assert
-        verify(historyRepository).findById(1L);
+        verify(historyRepository).findById(eq(1L));
         verify(historyRepository).save(isA(History.class));
         assertSame(history2, actualUpdateHistoryResult);
     }
@@ -246,7 +246,7 @@ class HistoryServiceDiffblueTest {
 
         // Act and Assert
         assertThrows(RuntimeException.class, () -> historyService.updateHistory(1L, historyDto));
-        verify(historyRepository).findById(1L);
+        verify(historyRepository).findById(eq(1L));
         verify(historyRepository).save(isA(History.class));
     }
 
@@ -266,7 +266,7 @@ class HistoryServiceDiffblueTest {
 
         // Act and Assert
         assertThrows(RuntimeException.class, () -> historyService.updateHistory(1L, historyDto));
-        verify(historyRepository).findById(1L);
+        verify(historyRepository).findById(eq(1L));
     }
 
     /**
@@ -282,8 +282,8 @@ class HistoryServiceDiffblueTest {
         boolean actualDeleteHistoryResult = historyService.deleteHistory(1L);
 
         // Assert
-        verify(historyRepository).deleteById(1L);
-        verify(historyRepository).existsById(1L);
+        verify(historyRepository).deleteById(eq(1L));
+        verify(historyRepository).existsById(eq(1L));
         assertTrue(actualDeleteHistoryResult);
     }
 
@@ -298,8 +298,8 @@ class HistoryServiceDiffblueTest {
 
         // Act and Assert
         assertThrows(RuntimeException.class, () -> historyService.deleteHistory(1L));
-        verify(historyRepository).deleteById(1L);
-        verify(historyRepository).existsById(1L);
+        verify(historyRepository).deleteById(eq(1L));
+        verify(historyRepository).existsById(eq(1L));
     }
 
     /**
@@ -314,7 +314,7 @@ class HistoryServiceDiffblueTest {
         boolean actualDeleteHistoryResult = historyService.deleteHistory(1L);
 
         // Assert
-        verify(historyRepository).existsById(1L);
+        verify(historyRepository).existsById(eq(1L));
         assertFalse(actualDeleteHistoryResult);
     }
 
@@ -375,7 +375,7 @@ class HistoryServiceDiffblueTest {
         History actualFindByIdResult = historyService.findById(1L);
 
         // Assert
-        verify(historyRepository).findById(1L);
+        verify(historyRepository).findById(eq(1L));
         assertSame(history, actualFindByIdResult);
     }
 
@@ -389,6 +389,6 @@ class HistoryServiceDiffblueTest {
 
         // Act and Assert
         assertThrows(RuntimeException.class, () -> historyService.findById(1L));
-        verify(historyRepository).findById(1L);
+        verify(historyRepository).findById(eq(1L));
     }
 }
