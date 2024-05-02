@@ -15,6 +15,8 @@ import io.swagger.v3.oas.annotations.servers.Server;
 @Configuration
 public class SwaggerConfiguration implements WebMvcConfigurer {
 
+
+
     @Override
     public final void addViewControllers(final ViewControllerRegistry registry) {
         registry.addRedirectViewController("/docs", "/swagger-ui.html");
