@@ -34,7 +34,6 @@ public class DateService {
         this.userRepository = userRepository;
     }
 
-
     public Date addDate(DateDto dateDto) {
         try {
             User user = userRepository.findById(dateDto.getUserId()).orElseThrow(() -> new RuntimeException("Tag not found"));
