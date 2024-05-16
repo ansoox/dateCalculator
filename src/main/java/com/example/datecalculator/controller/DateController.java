@@ -7,6 +7,7 @@ import com.example.datecalculator.model.Date;
 import com.example.datecalculator.model.Tag;
 import com.example.datecalculator.dto.DateDto;
 import com.example.datecalculator.service.DateService;
+import com.example.datecalculator.service.RequestCounterService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,13 +19,16 @@ import java.util.List;
 @RequestMapping("/calculate/date")
 public class DateController {
     private final DateService dateService;
+    private final RequestCounterService counterService;
 
-    public DateController(DateService dateService) {
+    public DateController(DateService dateService, RequestCounterService counterService) {
         this.dateService = dateService;
+        this.counterService = counterService;
     }
 
     @GetMapping
     public List<DateListResponseDto> getALL() {
+        counterService.requestIncrement();
         List<DateListResponseDto> response = new ArrayList<>();
         for (Date date : dateService.getAllDates()) {
             response.add(new DateListResponseDto(date));
@@ -34,32 +38,38 @@ public class DateController {
 
     @GetMapping("/{id}")
     public DateResponseDto getDateById(@PathVariable(name = "id") Long id) {
+        counterService.requestIncrement();
         return new DateResponseDto(dateService.findById(id));
     }
 
     @PostMapping
     public DateResponseDto addDate(@RequestBody DateDto dateDto) {
+        counterService.requestIncrement();
         return new DateResponseDto(dateService.addDate(dateDto));
     }
 
     @DeleteMapping("/{id}")
     public void deleteDate(@PathVariable(name = "id") Long id) {
+        counterService.requestIncrement();
         dateService.deleteDate(id);
     }
 
     @PutMapping("/{id}")
     public DateResponseDto updateDate(@RequestBody DateDto dateDto, @PathVariable(name = "id") Long id) {
+        counterService.requestIncrement();
         Date updatedDate = dateService.updateDate(id, dateDto);
         return new DateResponseDto(updatedDate);
     }
 
     @PatchMapping("/{id}")
     public DateResponseDto updateUser(@PathVariable Long id, @RequestBody DateDto dateDto) {
+        counterService.requestIncrement();
         return new DateResponseDto(dateService.addTagToDate(id, dateDto));
     }
 
     @GetMapping("/getDateTags/{id}")
     public List<TagListResponseDto> getDateTags(@PathVariable(name = "id") Long id) {
+        counterService.requestIncrement();
         List<TagListResponseDto> response = new ArrayList<>();
         for (Tag tag : dateService.getTagsByDate(id)) {
             response.add(new TagListResponseDto(tag));
