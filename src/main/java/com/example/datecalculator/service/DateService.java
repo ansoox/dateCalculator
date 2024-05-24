@@ -1,5 +1,6 @@
 package com.example.datecalculator.service;
 
+import com.example.datecalculator.dto.DateAddDto;
 import com.example.datecalculator.exception.BadRequestException;
 import com.example.datecalculator.exception.NotFoundException;
 import com.example.datecalculator.exception.ServerException;
@@ -34,11 +35,11 @@ public class DateService {
         this.userRepository = userRepository;
     }
 
-    public Date addDate(DateDto dateDto) {
+    public Date addDate(DateAddDto dateAddDto) {
         try {
-            User user = userRepository.findById(dateDto.getUserId()).orElseThrow(() -> new RuntimeException("Tag not found"));
+            User user = userRepository.findById(dateAddDto.getUserId()).orElseThrow(() -> new RuntimeException("User not found"));
             Date date = new Date();
-            date.setDate(dateDto.getDate());
+            date.setDate(dateAddDto.getDate());
             date.setUser(user);
             date.setCreatedAt(new Timestamp(System.currentTimeMillis()));
             date.setUpdatedAt(new Timestamp(System.currentTimeMillis()));

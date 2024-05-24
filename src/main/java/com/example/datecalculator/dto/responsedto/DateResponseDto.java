@@ -15,6 +15,8 @@ public class DateResponseDto {
     private UserListResponseDto user;
     private List<TagListResponseDto> tags = new ArrayList<>();
 
+    public DateResponseDto() {}
+
     public DateResponseDto(Date date) {
         this.id = date.getId();
         this.date = date.getDate();
