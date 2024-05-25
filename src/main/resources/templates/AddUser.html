@@ -14,6 +14,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <style>
+        p {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
         .custom-font {
             font-family: "Jersey 25 Charted", sans-serif;
             font-weight: 400;
@@ -84,36 +89,70 @@
         footer {
             margin-top: auto;
         }
+
+        button {
+            padding: 5px 10px;
+            font-size: 14px;
+            margin: 0 5px 0 0;
+        }
+
+        .container-buttons {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        .service-feature {
+            background: #f4f4f4;
+            padding: 10px;
+            border: #ccc 1px solid;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
     </style>
     <meta name="theme-color" content="#712cf9">
 </head>
 <body>
 <div th:replace="../fragments/Header :: header"></div>
 
-<form action="#" th:action="@{/user/add}" th:object="${userDto}" method="post" style="padding-left: 20px;">
-    <div class="row g-3">
-        <div class="col-12">
-            <label for="name" class="form-label">Name</label>
-            <input type="text" class="form-control" th:field="*{name}" placeholder="Name" required="">
-            <div class="invalid-feedback">
-                Valid name is required.
+<div class="container">
+    <h1>Creating a new user</h1>
+    <div class="service-feature">
+        <form action="#" th:action="@{/user/add}" th:object="${userDto}" method="post">
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" th:field="*{name}" placeholder="Name" required="">
+                <div class="invalid-feedback">
+                    Valid name is required.
+                </div>
             </div>
-        </div>
-
-        <div class="col-12">
-            <label for="password" class="form-label">Password</label>
-            <div class="input-group has-validation">
-                <input type="text" class="form-control" th:field="*{password}" placeholder="Password" required=""><br>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="text" class="form-control" th:field="*{password}" placeholder="Password" required="">
                 <div class="invalid-feedback">
                     Your password is required.
                 </div>
             </div>
-        </div>
-        <div class="col-12" style="padding-left: 20px;">
-            <button type="submit" class="btn btn-primary">Create User</button>
-        </div>
+            <button type="submit" class="btn btn-primary">Create</button>
+        </form>
     </div>
-</form>
+</div>
 
 <footer>
     <div th:replace="../fragments/Footer :: footer"></div>

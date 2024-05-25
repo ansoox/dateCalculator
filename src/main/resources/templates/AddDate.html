@@ -14,6 +14,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <style>
+        p {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
         .custom-font {
             font-family: "Jersey 25 Charted", sans-serif;
             font-weight: 400;
@@ -81,8 +86,43 @@
             display: block !important;
         }
 
+        button {
+            padding: 5px 10px;
+            font-size: 14px;
+            margin: 0 5px 0 0;
+        }
+
+        .container-buttons {
+            display: flex;
+            align-items: center;
+        }
+
         footer {
             margin-top: auto;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        .service-feature {
+            background: #f4f4f4;
+            padding: 10px;
+            border: #ccc 1px solid;
+            border-radius: 5px;
+            margin-bottom: 5px;
         }
     </style>
     <meta name="theme-color" content="#712cf9">
@@ -90,19 +130,21 @@
 <body>
 <div th:replace="../fragments/Header :: header"></div>
 
-<div class="container mt-4">
-    <h2>Creating a new date</h2>
-    <form action="#" th:action="@{/date/add}" th:object="${dateAddDto}" method="post">
-        <div class="mb-3">
-            <label for="userId" class="form-label">User ID</label>
-            <input type="number" class="form-control" id="userId" th:field="*{userId}" required>
-        </div>
-        <div class="mb-3">
-            <label for="addDate" class="form-label">Date</label>
-            <input type="datetime-local" class="form-control" id="addDate" th:field="*{addDate}" required step="1">
-        </div>
-        <button type="submit" class="btn btn-primary">Create</button>
-    </form>
+<div class="container">
+    <h1>Creating a new date</h1>
+    <div class="service-feature">
+        <form action="#" th:action="@{/date/add}" th:object="${dateAddDto}" method="post">
+            <div class="mb-3">
+                <label for="userId" class="form-label">User ID</label>
+                <input type="number" class="form-control" id="userId" th:field="*{userId}" required>
+            </div>
+            <div class="mb-3">
+                <label for="addDate" class="form-label">Date</label>
+                <input type="datetime-local" class="form-control" id="addDate" th:field="*{addDate}" required step="1">
+            </div>
+            <button type="submit" class="btn btn-primary">Create</button>
+        </form>
+    </div>
 </div>
 
 <footer>

@@ -14,6 +14,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <style>
+        p {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
         .custom-font {
             font-family: "Jersey 25 Charted", sans-serif;
             font-weight: 400;
@@ -48,8 +53,43 @@
             color: #0066cc;
         }
 
+        button {
+            padding: 5px 10px;
+            font-size: 14px;
+            margin: 0 5px 0 0;
+        }
+
+        .container-buttons {
+            display: flex;
+            align-items: center;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
         footer {
             margin-top: auto;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        .service-feature {
+            background: #f4f4f4;
+            padding: 10px;
+            border: #ccc 1px solid;
+            border-radius: 5px;
+            margin-bottom: 5px;
         }
     </style>
     <meta name="theme-color" content="#712cf9">
@@ -57,21 +97,27 @@
 <body>
 <div th:replace="../fragments/Header :: header"></div>
 
-<div style="padding-left: 20px;">
-    <div th:if="${not #lists.isEmpty(users)}">
-        <h2>User list</h2>
-        <div th:each="user : ${users}" class="user-card">
-            <div class="user-name" th:text="${user.name}"></div>
-            <div class="user-id" th:text="'ID: ' + ${user.id}"></div>
-            <a th:href="@{'/user/' + ${user.id}}" class="more-info">more info</a>
+<div class="container">
+    <h1>User list</h1>
+    <div class="service-feature">
+        <div style="padding-left: 20px;">
+            <div th:if="${not #lists.isEmpty(users)}">
+                <div th:each="user : ${users}" class="user-card">
+                    <div class="user-name" th:text="${user.name}"></div>
+                    <div class="user-id" th:text="'ID: ' + ${user.id}"></div>
+                    <a th:href="@{'/user/' + ${user.id}}" class="more-info">more info</a>
+                </div>
+            </div>
+            <div th:if="${#lists.isEmpty(users)}">
+                <p>Users are not found</p>
+            </div>
         </div>
-    </div>
-    <div th:if="${#lists.isEmpty(users)}">
-        <p>Users are not found</p>
     </div>
 </div>
 
-<footer><div th:replace="../fragments/Footer :: footer"></div></footer>
+<footer>
+    <div th:replace="../fragments/Footer :: footer"></div>
+</footer>
 
 <script src="/docs/5.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"

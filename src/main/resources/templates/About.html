@@ -15,9 +15,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
+
         .container {
             width: 80%;
             margin: auto;
@@ -43,6 +45,17 @@
 
         footer {
             margin-top: auto;
+        }
+
+        button {
+            padding: 5px 10px;
+            font-size: 14px;
+            margin: 0 5px 0 0;
+        }
+
+        .container-buttons {
+            display: flex;
+            align-items: center;
         }
     </style>
     <meta name="theme-color" content="#712cf9">

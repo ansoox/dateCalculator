@@ -14,6 +14,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <style>
+        p {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
         .custom-font {
             font-family: "Jersey 25 Charted", sans-serif;
             font-weight: 400;
@@ -101,8 +106,43 @@
             color: #555;
         }
 
+        button {
+            padding: 5px 10px;
+            font-size: 14px;
+            margin: 0 5px 0 0;
+        }
+
+        .container-buttons {
+            display: flex;
+            align-items: center;
+        }
+
         footer {
             margin-top: auto;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        .service-feature {
+            background: #f4f4f4;
+            padding: 10px;
+            border: #ccc 1px solid;
+            border-radius: 5px;
+            margin-bottom: 5px;
         }
     </style>
     <meta name="theme-color" content="#712cf9">
@@ -110,31 +150,33 @@
 <body>
 <div th:replace="../fragments/Header :: header"></div>
 
-<div style="padding-left: 20px;">
-    <h2>Select a date:</h2>
-    <div th:if="${not #lists.isEmpty(dates)}">
-        <div th:each="date : ${dates}" class="date-card" style="padding-left: 20px;">
-            <div class="date-name" th:text="'Date: ' + ${date.date}"></div>
-            <div class="date-id" th:text="'ID: ' + ${date.id}"></div>
-            <div th:each="user : ${date.user}">
-                <div th:text="'User: ' + ${user.name}"></div>
-            </div>
-            <div th:each="tag : ${date.tags}">
-                <div th:text="'Tag name: ' + ${tag.tagName}"></div>
-            </div>
+<div class="container">
+    <h1>Add date to tag</h1>
+    <div class="service-feature">
+        <h2> Select a date:</h2>
+        <div th:if="${not #lists.isEmpty(dates)}">
+            <div th:each="date : ${dates}" class="date-card" style="padding-left: 20px;">
+                <div class="date-name" th:text="'Date: ' + ${date.date}"></div>
+                <div class="date-id" th:text="'ID: ' + ${date.id}"></div>
+                <div th:each="user : ${date.user}">
+                    <div th:text="'User: ' + ${user.name}"></div>
+                </div>
+                <div th:each="tag : ${date.tags}">
+                    <div th:text="'Tag name: ' + ${tag.tagName}"></div>
+                </div>
 
-            <form th:action="@{'/date/' + ${tagId} + '/addDateToTag'}" method="post">
-                <input type="hidden" name="_method" value="patch" />
-                <input type="hidden" name="dateId" th:value="${date.id}" />
-                <button type="submit">Add date</button>
-            </form>
+                <form th:action="@{'/date/' + ${tagId} + '/addDateToTag'}" method="post">
+                    <input type="hidden" name="_method" value="patch"/>
+                    <input type="hidden" name="dateId" th:value="${date.id}"/>
+                    <button type="submit">Add date</button>
+                </form>
+            </div>
+        </div>
+        <div th:if="${#lists.isEmpty(dates)}">
+            <p>Dates are not found</p>
         </div>
     </div>
-    <div th:if="${#lists.isEmpty(dates)}">
-        <p>Dates are not found</p>
-    </div>
 </div>
-
 <footer>
     <div th:replace="../fragments/Footer :: footer"></div>
 </footer>

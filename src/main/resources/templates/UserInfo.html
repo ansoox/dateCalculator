@@ -14,11 +14,51 @@
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <style>
+        p {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
         .custom-font {
             font-family: "Jersey 25 Charted", sans-serif;
             font-weight: 400;
             font-style: normal;
             font-size: 52px;
+        }
+
+        button {
+            padding: 5px 10px;
+            font-size: 14px;
+            margin: 0 5px 0 0;
+        }
+
+        .container-buttons {
+            display: flex;
+            align-items: center;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        .service-feature {
+            background: #f4f4f4;
+            padding: 10px;
+            border: #ccc 1px solid;
+            border-radius: 5px;
+            margin-bottom: 5px;
         }
 
         footer {
@@ -41,41 +81,44 @@
     </header>
 </div>
 
-<div style="padding-left: 20px;">
-    <div th:if="${user != null}">
-        <h2>User Info</h2>
-        <div class="user-card">
-            <div class="user-name" th:text="${user.name}"></div>
-            <div class="user-id" th:text="'ID: ' + ${user.id}"></div>
-            <div th:text="'Created: ' + ${user.createdAt}"></div>
-            <div th:text="'Updated: ' + ${user.updatedAt}"></div>
-            <div th:text="'Dates:'"></div>
+<div class="container">
+    <h1>User information</h1>
+    <div class="service-feature">
+        <div th:if="${user != null}">
+            <h2>User Info</h2>
+            <div class="user-card">
+                <div class="user-name" th:text="${user.name}"></div>
+                <div class="user-id" th:text="'ID: ' + ${user.id}"></div>
+                <div th:text="'Created: ' + ${user.createdAt}"></div>
+                <div th:text="'Updated: ' + ${user.updatedAt}"></div>
+                <div th:text="'Dates:'"></div>
 
-            <ul>
-                <li th:each="date : ${user.dates}">
-                    <div th:text="'Date: ' + ${date.id}"></div>
-                    <div th:text="'ID: ' + ${date.id}"></div>
-                    <div th:text="'Created: ' + ${date.createdAt}"></div>
-                    <div th:text="'Updated: ' + ${date.updatedAt}"></div>
-                    <div th:each="user : ${date.user}">
-                        <div th:text="'User: ' + ${user.name}"></div>
-                    </div>
-                    <div th:each="tag : ${date.tags}">
-                        <div th:text="'Tag name: ' + ${tag.tagName}"></div>
-                        <div th:text="'ID: ' + ${tag.id}"></div>
-                    </div>
-                </li>
-            </ul>
+                <ul>
+                    <li th:each="date : ${user.dates}">
+                        <div th:text="'Date: ' + ${date.id}"></div>
+                        <div th:text="'ID: ' + ${date.id}"></div>
+                        <div th:text="'Created: ' + ${date.createdAt}"></div>
+                        <div th:text="'Updated: ' + ${date.updatedAt}"></div>
+                        <div th:each="user : ${date.user}">
+                            <div th:text="'User: ' + ${user.name}"></div>
+                        </div>
+                        <div th:each="tag : ${date.tags}">
+                            <div th:text="'Tag name: ' + ${tag.tagName}"></div>
+                            <div th:text="'ID: ' + ${tag.id}"></div>
+                        </div>
+                    </li>
+                </ul>
 
+            </div>
         </div>
-    </div>
-    <div th:if="${user == null}">
-        <p>User not found</p>
+        <div th:if="${user == null}">
+            <p>User not found</p>
+        </div>
     </div>
 </div>
 
 <form action="#" th:action="@{'/user/' + ${user.id}}" th:object="${user}" method="post">
-    <input type="hidden" name="_method" value="delete" />
+    <input type="hidden" name="_method" value="delete"/>
     <div class="col-sm-6" style="padding-left: 20px;">
         <button type="submit" class="btn btn-primary">Delete</button>
     </div>
@@ -87,7 +130,9 @@
     </div>
 </form>
 
-<footer><div th:replace="../fragments/Footer :: footer"></div></footer>
+<footer>
+    <div th:replace="../fragments/Footer :: footer"></div>
+</footer>
 
 <script src="/docs/5.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
