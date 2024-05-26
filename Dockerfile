@@ -11,4 +11,6 @@ WORKDIR /app
 
 COPY --from=build /app/target ./target
 
+EXPOSE 8080
+
 CMD ["java", "-jar", "target/dateCalculator-0.0.1-SNAPSHOT.jar"]
