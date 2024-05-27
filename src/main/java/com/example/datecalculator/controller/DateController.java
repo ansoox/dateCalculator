@@ -88,7 +88,7 @@ public class DateController {
     }
 
     @GetMapping("/{tagId}/addDateToTag")
-    public String AddingDateToTag(@PathVariable(name = "tagId") Long tagId, Model model) {
+    public String addingDateToTag(@PathVariable(name = "tagId") Long tagId, Model model) {
         List<DateResponseDto> dates = new ArrayList<>();
         for (Date date : dateService.getAllDates()) {
             dates.add(new DateResponseDto(date));

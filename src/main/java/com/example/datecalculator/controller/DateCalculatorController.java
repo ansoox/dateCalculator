@@ -18,7 +18,7 @@ public class DateCalculatorController {
     }
 
     @GetMapping("/")
-    public String DateCalculatorHome(Model model){
+    public String dateCalculatorHome(Model model){
         model.addAttribute("title", "Date Calculator");
         return "DateCalculatorHome";
     }
@@ -31,7 +31,7 @@ public class DateCalculatorController {
     }
 
     @GetMapping("/about")
-    public String About(Model model){
+    public String about(Model model){
         model.addAttribute("title", "About");
         return "About";
     }
