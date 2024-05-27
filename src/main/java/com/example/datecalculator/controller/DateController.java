@@ -27,6 +27,8 @@ public class DateController {
     private final DateService dateService;
     private final RequestCounterService counterService;
 
+    private static final String DATES_ATTRIBUTE = "dates";
+
     public DateController(DateService dateService, RequestCounterService counterService) {
         this.dateService = dateService;
         this.counterService = counterService;
@@ -40,10 +42,10 @@ public class DateController {
             dates.add(new DateResponseDto(date));
         }
         if (!dates.isEmpty()) {
-            model.addAttribute("dates", dates);
+            model.addAttribute(DATES_ATTRIBUTE, dates);
             return "Dates";
         } else {
-            model.addAttribute("dates", Collections.emptyList());
+            model.addAttribute(DATES_ATTRIBUTE, Collections.emptyList());
             return "Dates";
         }
     }

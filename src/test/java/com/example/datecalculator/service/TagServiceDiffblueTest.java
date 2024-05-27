@@ -35,6 +35,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.aot.DisabledInAotMode;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+
 @ContextConfiguration(classes = {TagService.class})
 @ExtendWith(SpringExtension.class)
 @DisabledInAotMode

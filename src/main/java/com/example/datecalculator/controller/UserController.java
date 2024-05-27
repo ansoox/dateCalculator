@@ -25,6 +25,8 @@ public class UserController {
     private final UserService userService;
     private final RequestCounterService counterService;
 
+    private static final String REDIRECT_USER = "redirect:/user";
+
     public UserController(UserService userService, RequestCounterService counterService) {
         this.userService = userService;
         this.counterService = counterService;
@@ -72,7 +74,7 @@ public class UserController {
     public String createUser(@ModelAttribute UserDto userDto, Model model) {
         counterService.requestIncrement();
         userService.addUser(userDto);
-        return "redirect:/user";
+        return REDIRECT_USER;
     }
 
     @PostMapping("/bulk")
@@ -85,7 +87,7 @@ public class UserController {
     public String deleteUser(@PathVariable(name = "id") Long id, Model model) {
         counterService.requestIncrement();
         userService.deleteUser(id);
-        return "redirect:/user";
+        return REDIRECT_USER;
     }
 
     @GetMapping("/{id}/update")
@@ -100,7 +102,7 @@ public class UserController {
     public String updateUser(@ModelAttribute UserDto userDto, @PathVariable(name = "id") Long id, Model model) {
         counterService.requestIncrement();
         userService.updateUser(id, userDto.getName(), userDto.getPassword());
-        return "redirect:/user";
+        return REDIRECT_USER;
     }
 
     @GetMapping("/getUserDates/{id}")
