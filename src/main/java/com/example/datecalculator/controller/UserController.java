@@ -1,20 +1,17 @@
 package com.example.datecalculator.controller;
 
 import com.example.datecalculator.dto.responsedto.DateListResponseDto;
-import com.example.datecalculator.dto.responsedto.UserListResponseDto;
 import com.example.datecalculator.dto.responsedto.UserResponseDto;
 import com.example.datecalculator.model.User;
 import com.example.datecalculator.model.Date;
 import com.example.datecalculator.dto.UserDto;
 import com.example.datecalculator.service.RequestCounterService;
 import com.example.datecalculator.service.UserService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -46,32 +43,12 @@ public class UserController {
         }
     }
 
-//    @GetMapping
-//    public ResponseEntity<List<UserListResponseDto>> getAll() {
-//        counterService.requestIncrement();
-//        Optional<List<User>> optionalUsers = userService.getAllUsers();
-//        if (optionalUsers.isPresent()) {
-//            List<UserListResponseDto> response = optionalUsers.get().stream()
-//                    .map(UserListResponseDto::new)
-//                    .toList();
-//            return new ResponseEntity<>(response, HttpStatus.OK);
-//        } else {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//    }
-
     @GetMapping("/{id}")
     public String getUserById(@PathVariable(name = "id") Long id, Model model) {
         counterService.requestIncrement();
         model.addAttribute("user", new UserResponseDto(userService.findById(id)));
         return "UserInfo";
     }
-
-//    @GetMapping("/{id}")
-//    public UserResponseDto getUserById(@PathVariable(name = "id") Long id) {
-//        counterService.requestIncrement();
-//        return new UserResponseDto(userService.findById(id));
-//    }
 
     @GetMapping("/search")
     public List<UserResponseDto> searchUsersByName(@RequestParam String name) {
@@ -98,13 +75,6 @@ public class UserController {
         return "redirect:/user";
     }
 
-
-//    @PostMapping
-//    public User createUser(@RequestBody UserDto userDto) {
-//        counterService.requestIncrement();
-//        return userService.addUser(userDto);
-//    }
-
     @PostMapping("/bulk")
     public ResponseEntity<Object> createUsers(@RequestBody List<UserDto> users) {
         counterService.requestIncrement();
@@ -117,12 +87,6 @@ public class UserController {
         userService.deleteUser(id);
         return "redirect:/user";
     }
-
-//    @DeleteMapping("/{id}")
-//    public void deleteUser(@PathVariable(name = "id") Long id) {
-//        counterService.requestIncrement();
-//        userService.deleteUser(id);
-//    }
 
     @GetMapping("/{id}/update")
     public String updatingUser(@PathVariable(name = "id") Long id, Model model) {
@@ -138,12 +102,6 @@ public class UserController {
         userService.updateUser(id, userDto.getName(), userDto.getPassword());
         return "redirect:/user";
     }
-
-//    @PutMapping("/{id}")
-//    public User updateUser(@RequestBody UserDto userDto, @PathVariable(name = "id") Long id) {
-//        counterService.requestIncrement();
-//        return userService.updateUser(id, userDto.getName(), userDto.getPassword());
-//    }
 
     @GetMapping("/getUserDates/{id}")
     public List<DateListResponseDto> getUserDates(@PathVariable(name = "id") Long id) {
