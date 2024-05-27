@@ -35,3 +35,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=ansoox_dateCalculator -D SONAR_TOKEN=3419b841113463249baedd47869f8a852c82c603 -D sonar.organization=ansoox
+      - name: Deploy
+        run: curl https://api.render.com/deploy/srv-cp9kjgkf7o1s73a2e8m0?key=7rtcU8byzDc
