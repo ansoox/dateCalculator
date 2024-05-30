@@ -18,10 +18,7 @@ services:
       - type: volume
         source: pgdata
         target: /var/lib/postgresql/data
-    environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: a0618
-      POSTGRES_DB: DateCalculatorDatabase
+    env_file: ./.env
 
 
 volumes:
